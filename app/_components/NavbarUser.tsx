@@ -34,8 +34,8 @@ const SideNav = () => {
   ];
   return (
     <nav className="fixed flex flex-col items-center w-[200px] h-screen gap-2 p-4 bg-primary-500">
-      <Link href={"/admin"} className="mb-5 font-bold text-white">
-        Dashboard Admin
+      <Link href={"/user"} className="mb-5 font-bold text-white">
+        Dashboard User
       </Link>
       {navigation.map((item) => (
         <NavItem key={item.name} href={item.href}>

@@ -1,6 +1,4 @@
-// app/providers.tsx
 "use client";
-
 import { NextUIProvider } from "@nextui-org/react";
 import { SessionProvider } from "next-auth/react";
 import { useRouter } from "next/navigation";

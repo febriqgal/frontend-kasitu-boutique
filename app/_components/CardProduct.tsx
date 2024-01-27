@@ -13,13 +13,13 @@ export default function CardProduct() {
     return <Spinner className="flex items-center justify-center mt-4" />;
 
   return (
-    <div className="grid grid-cols-6 gap-4">
+    <div className="grid grid-cols-6 gap-4 mt-4">
       {data?.data?.map((e: any) => {
         return (
           <Link
             href={`/p/${e.id}`}
             key={e.id}
-            className="flex flex-col border-2 shadow rounded-xl overflow-clip"
+            className="flex flex-col border-2 shadow rounded-xl overflow-clip h-[300px]"
           >
             <div className="flex items-center justify-center w-full h-full overflow-clip bg-primary-100">
               <img src={`http://localhost:3000/product/${e.image}`} alt="#" />

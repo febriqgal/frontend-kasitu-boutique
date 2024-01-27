@@ -15,6 +15,7 @@ import { useGetSearchProductApiQuery } from "../_redux/feature/productsSlice";
 import { Product } from "../_types/products";
 import { AppConfig } from "../_constants/AppConfig";
 import axios from "axios";
+import Link from "next/link";
 export default function ModalSearch() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [value, setValue] = useState("");
@@ -67,14 +68,18 @@ export default function ModalSearch() {
                 ) : (
                   <div>
                     {dataSearchProduct?.data?.map((item: Product) => (
-                      <div key={item.id}>
+                      <Link
+                        href={`/p/${item.id}`}
+                        className="flex gap-2 bg-primary-200 p-2 rounded-xl"
+                        key={item.id}
+                      >
                         <img
                           className="h-6 aspect-video"
                           src={`${AppConfig.imgURL}${item.image}`}
                           alt="#"
                         />
                         <h1>{item.title}</h1>
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 )}

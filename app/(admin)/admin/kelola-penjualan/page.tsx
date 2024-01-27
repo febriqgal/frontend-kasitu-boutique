@@ -19,13 +19,26 @@ import {
 import axios from "axios";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import Pdf from "@/app/_components/cetak";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 export default function KelolaPenejualanPage() {
   const { data: dataOrder } = useGetOrderApiQuery({});
-  console.log(dataOrder);
 
   return (
     <div className="w-full p-10">
+      <PDFDownloadLink document={<Pdf />} fileName={`${Date.now()}.pdf`}>
+        {({ blob, url, loading, error }) =>
+          loading ? (
+            <Button size="sm" color="primary">{`"Loading document..."`}</Button>
+          ) : (
+            <Button
+              size="sm"
+              color="primary"
+            >{`Download Laporan Penjualan`}</Button>
+          )
+        }
+      </PDFDownloadLink>
       <Table
         color="primary"
         className="w-full "
@@ -84,7 +97,7 @@ export default function KelolaPenejualanPage() {
                       <Button
                         size="sm"
                         fullWidth
-                        color={e.status === "success" ? "success" : "default"}
+                        color={"primary"}
                         variant={"flat"}
                       >
                         {e.status}

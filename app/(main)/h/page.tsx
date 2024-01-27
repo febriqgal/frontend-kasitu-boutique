@@ -12,12 +12,19 @@ import {
   TableCell,
   Button,
   Spinner,
+  DropdownItem,
+  DropdownMenu,
+  Dropdown,
+  DropdownTrigger,
 } from "@nextui-org/react";
 import { Order } from "@/app/_types/order";
 import ModalBayar from "@/app/_components/ModalBayar";
 import { AppConfig, formatRupiah } from "@/app/_constants/AppConfig";
 import Link from "next/link";
 import NoDataImage from "@/app/_components/NoData";
+import toast from "react-hot-toast";
+import axios from "axios";
+import ModalConfirmSuccess from "@/app/_components/ModalConfirmSuccess";
 
 export default function HistoryPage() {
   const { data: session } = useSession();
@@ -77,7 +84,11 @@ export default function HistoryPage() {
                   </Button>
                 </TableCell>
                 <TableCell>
-                  <ModalBayar dataOrder={e} />
+                  {e.status === "delivered" ? (
+                    <ModalConfirmSuccess dataOrder={e} />
+                  ) : (
+                    <ModalBayar dataOrder={e} />
+                  )}
                 </TableCell>
               </TableRow>
             );
