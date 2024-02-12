@@ -24,7 +24,8 @@
     "react-huge-icons": "^1.3.7",
     "react-redux": "^9.0.4",
     "react-sticky-box": "^2.0.5",
-    "sharp": "^0.33.1"
+    "sharp": "^0.33.1",
+    "write-excel-file": "^1.4.29"
   },
   "devDependencies": {
     "@types/node": "^20",

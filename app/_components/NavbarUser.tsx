@@ -22,7 +22,7 @@ const SideNav = () => {
       icon: <EditRectangle className="text-white" />,
     },
     {
-      name: "Riwayat Pemesanan",
+      name: "Riwayat Pembelian",
       href: "/user/riwayat-pembelian",
       icon: <EditRectangle className="text-white" />,
     },
@@ -35,7 +35,7 @@ const SideNav = () => {
   return (
     <nav className="fixed flex flex-col items-center w-[200px] h-screen gap-2 p-4 bg-primary-500">
       <Link href={"/user"} className="mb-5 font-bold text-white">
-        Dashboard User
+        Dashboard Customer
       </Link>
       {navigation.map((item) => (
         <NavItem key={item.name} href={item.href}>

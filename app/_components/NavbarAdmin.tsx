@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { EditRectangle, Login, Logout } from "react-huge-icons/bulk";
 const IconSideNav = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex h-screen ">
+    <div className="flex h-screen">
       <SideNav />
       <div className="w-full ml-[200px]">
         <div>{children}</div>
@@ -22,7 +22,7 @@ const SideNav = () => {
       icon: <EditRectangle className="text-white" />,
     },
     {
-      name: "Kelola User",
+      name: "Kelola Customer",
       href: "/admin/kelola-user",
       icon: <EditRectangle className="text-white" />,
     },
@@ -38,7 +38,7 @@ const SideNav = () => {
     },
   ];
   return (
-    <nav className="fixed flex flex-col items-center w-[200px] h-screen gap-2 p-4 bg-primary-500">
+    <nav className="fixed flex z-50 flex-col items-center w-[200px] h-screen gap-2 p-4 bg-primary-500">
       <Link href={"/admin"} className="mb-5 font-bold text-white">
         Dashboard Admin
       </Link>

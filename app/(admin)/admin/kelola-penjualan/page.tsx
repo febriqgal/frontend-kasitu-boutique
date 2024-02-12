@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
+import ModalLaporanBulanan from "@/app/_components/ModalReportMonth";
+import ModalLaporanTahunan from "@/app/_components/ModalReportYear";
 import { AppConfig, formatRupiah } from "@/app/_constants/AppConfig";
 import { useGetOrderApiQuery } from "@/app/_redux/feature/ordersSlice";
 import { Order } from "@/app/_types/order";
@@ -19,29 +21,21 @@ import {
 import axios from "axios";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import Pdf from "@/app/_components/cetak";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-
+import dayjs from "dayjs";
+import ModalReportDay from "@/app/_components/ModalReportDay";
 export default function KelolaPenejualanPage() {
   const { data: dataOrder } = useGetOrderApiQuery({});
 
   return (
-    <div className="w-full p-10">
-      <PDFDownloadLink document={<Pdf />} fileName={`${Date.now()}.pdf`}>
-        {({ blob, url, loading, error }) =>
-          loading ? (
-            <Button size="sm" color="primary">{`"Loading document..."`}</Button>
-          ) : (
-            <Button
-              size="sm"
-              color="primary"
-            >{`Download Laporan Penjualan`}</Button>
-          )
-        }
-      </PDFDownloadLink>
+    <div className="w-full p-10 space-y-2">
+      <div className="flex gap-2">
+        <ModalReportDay />
+        <ModalLaporanTahunan />
+        <ModalLaporanBulanan />
+      </div>
       <Table
         color="primary"
-        className="w-full "
+        className="w-full"
         fullWidth
         aria-label="Example static collection table"
       >
@@ -56,6 +50,7 @@ export default function KelolaPenejualanPage() {
           <TableColumn>Total</TableColumn>
           <TableColumn>Bukti Pembayaran</TableColumn>
           <TableColumn>Catatan</TableColumn>
+          <TableColumn>Tanggal</TableColumn>
           <TableColumn>Status</TableColumn>
         </TableHeader>
         <TableBody>
@@ -91,6 +86,9 @@ export default function KelolaPenejualanPage() {
                   </Button>
                 </TableCell>
                 <TableCell>{e.note}</TableCell>
+                <TableCell className="text-nowrap">
+                  {dayjs(e.created_at).format("DD MMMM YYYY - HH:mm")}
+                </TableCell>
                 <TableCell>
                   <Dropdown>
                     <DropdownTrigger>

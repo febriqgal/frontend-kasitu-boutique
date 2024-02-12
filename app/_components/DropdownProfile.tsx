@@ -18,9 +18,6 @@ export default function DropdownProfile() {
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
         <DropdownItem isReadOnly>{session?.user?.name}</DropdownItem>
-        <DropdownItem as={Link} href={"/h"}>
-          Riwayat Pembelian
-        </DropdownItem>
 
         <DropdownItem
           as={Link}
@@ -28,6 +25,7 @@ export default function DropdownProfile() {
         >
           Dashboard
         </DropdownItem>
+
         <DropdownItem
           onPress={async () => await signOut()}
           key="delete"

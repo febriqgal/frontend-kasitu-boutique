@@ -2,24 +2,16 @@
 import { formatRupiah } from "@/app/_constants/AppConfig";
 import { Order } from "@/app/_types/order";
 import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
-import axios from "axios";
+import dayjs from "dayjs";
 import "dayjs/locale/id";
-import { useEffect, useState } from "react";
 
-export default function Pdf() {
-  const [data, setData] = useState<Order[]>([]);
-  console.log(data);
-
-  const fetchData = async () => {
-    const res = await axios.get(
-      "http://127.0.0.1:8000/api/order/status/success"
-    );
-    return setData(res.data.data);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+export default function ReportDay({
+  data,
+  month,
+}: {
+  data: Order[];
+  month: string;
+}) {
   const styles = StyleSheet.create({
     table: {
       display: "flex",
@@ -42,7 +34,6 @@ export default function Pdf() {
     },
     tableCell: {
       textAlign: "left",
-
       margin: 5,
       fontSize: 10,
     },
@@ -50,19 +41,32 @@ export default function Pdf() {
   return (
     <Document>
       <Page
+        orientation="portrait"
         size="A4"
         style={{ marginVertical: 32, marginLeft: 32, paddingRight: 64 }}
       >
-        <Text
-          style={{
-            textAlign: "center",
-            fontSize: 16,
-            marginBottom: 10,
-            fontWeight: "bold",
-          }}
-        >
-          Laporan Penjualan
-        </Text>
+        <View style={{ display: "flex", flexDirection: "column" }}>
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 16,
+              marginBottom: 10,
+              fontWeight: "bold",
+            }}
+          >
+            Kasitu Boutique
+          </Text>
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 16,
+              marginBottom: 10,
+              fontWeight: "bold",
+            }}
+          >
+            Laporan Penjualan Harian pada {month}
+          </Text>
+        </View>
 
         <View style={styles.table}>
           <View style={styles.tableRow}>
@@ -81,11 +85,22 @@ export default function Pdf() {
             <View style={styles.tableCol}>
               <Text style={styles.tableCell}>Produk</Text>
             </View>
-            <View style={styles.tableCol}>
+            <View
+              style={{
+                width: "5%",
+                borderStyle: "solid",
+                borderWidth: 1,
+                borderLeftWidth: 0,
+                borderTopWidth: 0,
+              }}
+            >
               <Text style={styles.tableCell}>qty</Text>
             </View>
             <View style={styles.tableCol}>
               <Text style={styles.tableCell}>Alamat</Text>
+            </View>{" "}
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Tanggal</Text>
             </View>
             <View style={styles.tableCol}>
               <Text style={styles.tableCell}>Total</Text>
@@ -93,7 +108,6 @@ export default function Pdf() {
           </View>
           {data?.map((e: Order, i: any) => {
             const res = e;
-
             return (
               <View key={i} style={styles.tableRow}>
                 <View
@@ -114,11 +128,24 @@ export default function Pdf() {
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>{res.title}</Text>
                 </View>
-                <View style={styles.tableCol}>
+                <View
+                  style={{
+                    width: "5%",
+                    borderStyle: "solid",
+                    borderWidth: 1,
+                    borderLeftWidth: 0,
+                    borderTopWidth: 0,
+                  }}
+                >
                   <Text style={styles.tableCell}>{res.quantity as number}</Text>
                 </View>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>{res.address}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>
+                    {dayjs(res.created_at).format("DD MMM YYYY")}
+                  </Text>
                 </View>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>
@@ -129,14 +156,21 @@ export default function Pdf() {
             );
           })}
         </View>
-
-        <View style={{ marginTop: 60, fontSize: 10 }}>
+        <View style={{ marginTop: 10, fontSize: 10 }}>
           <View>
             <Text
               style={{ textAlign: "right" }}
             >{`Total Penjualan :  ${formatRupiah(
               data?.reduce((a: any, b: any) => a + b.total, 0)
             )}`}</Text>
+          </View>
+        </View>
+        <View style={{ marginTop: 60, fontSize: 10 }}>
+          <View>
+            <Text style={{ textAlign: "right" }}>{`Padang, ${dayjs(
+              Date.now()
+            ).format("DD MMM YYYY")}`}</Text>
+            <Text style={{ textAlign: "right", marginTop: 10 }}>Admin</Text>
           </View>
         </View>
       </Page>
